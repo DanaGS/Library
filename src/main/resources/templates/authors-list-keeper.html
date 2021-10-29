@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A library with attitude (and CSS), that hits different."
+    />
+    <meta name="author" content="Dana Gore Sierra" />
+    <title>Literary Club</title>
+    <link rel="stylesheet" th:href="@{/assets/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/libraryStyle.css}" />
+  </head>
+  <body>
+    <!-- <div class="container">
+      <h2>Authors</h2>
+      <div th:if="${authors.isEmpty()}">
+        <h4>There are no authors ;-;</h4>
+      </div>
+      <div class="card-deck" th:unless="${authors.isEmpty()}">
+        <div th:each="author : ${authors}">
+          <div class="card">
+            <img class="card-img-top" src="" alt="" />
+            <div class="card-body">
+              <p th:text="${author.nameAuthor}"></p>
+              <a
+                class="btn btn-dark"
+                th:href="@{keeper/authors/edit/__${author.idAuthor}__}"
+                >Edit</a
+              >
+              <form
+                method="post"
+                th:action="@{keeper/authors/delete/__${author.idAuthor}__}"
+              >
+                <button class="btn btn-dark" type="submit">Delete</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <nav th:replace="fragments :: keeperNavbar"></nav>
+    <div class="container">
+      <h2 class="text-center">Authors list</h2>
+    </div>
+
+    <div class="container-lg">
+      <div th:if="${authors.isEmpty()}">
+        <div
+          class="row row-cols-1 my-2 align-items-center justify-content-center"
+        >
+          <div class="col-12">
+            <p>There are no authors ;-;</p>
+          </div>
+        </div>
+      </div>
+      <div th:unless="${authors.isEmpty()}">
+        <div th:each="author : ${authors}">
+          <div
+            class="
+              row-cols-1 row-cols-md-3
+              my-5
+              align-items-center
+              justify-content-center
+            "
+          >
+            <div class="col-12 col-md-8 col-lg-4 my-3">
+              <div class="card border-0 clickable-card authorCard">
+                <a
+                  th:href="@{/keeper/authors/edit/__${author.idAuthor}__}"
+                  class="text-decoration-none"
+                >
+                  <img
+                    th:src="@{/images/who-are-we.jpg}"
+                    class="card-img-top"
+                    alt="Portrait of Author"
+                  />
+                  <div class="card-body text-center py-4 my-2">
+                    <p
+                      class="card-title my-2 text-black fw-bold"
+                      th:text="${author.nameAuthor}"
+                    ></p>
+                    <a
+                      class="btn btn-dark mb-2"
+                      th:href="@{/keeper/authors/edit/__${author.idAuthor}__}"
+                      role="button"
+                      >Edit</a
+                    >
+                    <form
+                      method="post"
+                      th:action="@{/keeper/authors/delete/__${author.idAuthor}__}"
+                    >
+                      <button class="btn btn-dark mb-2" type="submit">
+                        Delete
+                      </button>
+                    </form>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer th:replace="fragments :: myFooter"></footer>
+    <script th:src="@{/assets/bootstrap.bundle.min.js}"></script>
+  </body>
+</html>

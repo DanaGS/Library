@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A library with attitude (and CSS), that hits different."
+    />
+    <meta name="author" content="Dana Gore Sierra" />
+    <title>Literary Club</title>
+    <link rel="stylesheet" th:href="@{/assets/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/libraryStyle.css}" />
+  </head>
+  <body>
+    <nav th:replace="fragments :: keeperNavbar"></nav>
+    <div class="container">
+      <h2 class="text-center">Add an publisher to our great collection!</h2>
+    </div>
+    <div class="container centerContainer">
+      <form
+        autocomplete="off"
+        class="needs-validation"
+        method="post"
+        th:action="@{/keeper/publishers/save}"
+        th:object="${publisher}"
+      >
+        <div class="form-floating mb-3 col-8 col-lg-6 col col-xl-5">
+          <input
+            class="form-control"
+            id="name"
+            required
+            th:field="*{namePublisher}"
+            type="text"
+          />
+          <label for="name">Publisher Name *</label>
+          <div class="invalid-feedback">Publisher Name Required</div>
+        </div>
+        <button class="btn btn-dark mb-1" type="submit">SAVE</button>
+    <footer th:replace="fragments :: myFooter"></footer>
+    <script th:src="@{/assets/bootstrap.bundle.min.js}"></script>
+  </body>
+</html>

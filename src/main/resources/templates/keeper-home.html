@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A library with attitude (and CSS), that hits different."
+    />
+    <meta name="author" content="Dana Gore Sierra" />
+    <title>Literary Club</title>
+    <link rel="stylesheet" th:href="@{/assets/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/libraryStyle.css}" />
+  </head>
+  <body>
+    <nav th:replace="fragments :: keeperNavbar"></nav>
+    <div class="container">
+      <div class="container-lg">
+        <div
+          class="row row-cols-1 my-5 align-items-center justify-content-center"
+        >
+          <div class="col-8 col-lg-6 col col-xl-5 my-3">
+            <div class="card border-white border-2 transparent">
+              <div class="card-body text-center py-4 my-2">
+                <h3 class="card-title mt-3 text-white fw-normal">Books</h3>
+                <p class="card-subtitle mt-2 mb-4 text-muted text-white">
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                </p>
+                <a
+                  th:href="@{/keeper/books/all}"
+                  class="btn btn-dark mb-2"
+                  role="button"
+                  >SHOW BOOKS</a
+                >
+                <a
+                  th:href="@{/keeper/books/add}"
+                  class="btn btn-dark mb-4"
+                  role="button"
+                  >ADD BOOK</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-8 col-lg-6 col col-xl-5 my-3">
+            <div class="card border-white border-2 transparent">
+              <div class="card-body text-center py-4 my-2">
+                <h3 class="card-title mt-3 text-white fw-normal">Authors</h3>
+                <p class="card-subtitle mt-2 mb-4 text-muted text-white">
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                </p>
+                <a
+                  th:href="@{/keeper/authors/all}"
+                  class="btn btn-dark mb-2"
+                  role="button"
+                  >SHOW AUTHORS</a
+                >
+                <a
+                  th:href="@{/keeper/authors/add}"
+                  class="btn btn-dark mb-4"
+                  role="button"
+                  >ADD AUTHOR</a
+                >
+              </div>
+            </div>
+            </div>
+            <div class="col-8 col-lg-6 col col-xl-5 my-3">
+              <div class="card border-white border-2 transparent">
+                <div class="card-body text-center py-4 my-2">
+                  <h3 class="card-title mt-3 text-white fw-normal">
+                    Publishers
+                  </h3>
+                  <p class="card-subtitle mt-2 mb-4 text-muted text-white">
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                  </p>
+                  <a
+                    th:href="@{/keeper/publishers/all}"
+                    class="btn btn-dark mb-2"
+                    role="button"
+                    >SHOW PUBLISHERS</a
+                  >
+                  <a
+                    th:href="@{/keeper/publishers/add}"
+                    class="btn btn-dark mb-4"
+                    role="button"
+                    >ADD PUBLISHER</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer th:replace="fragments :: myFooter"></footer>
+    <script th:src="@{/assets/bootstrap.bundle.min.js}"></script>
+  </body>
+</html>
