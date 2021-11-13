@@ -13,8 +13,6 @@ import java.util.List;
 public class BookService {
 
     @Autowired
-    /* Con @Autowired las dependencias de la clase (sus atributos), son instanciados una única vez cuando se despliega
-    la aplicación y se comparten por todas las instancias */
     private BookRepo bookRepository;
 
     @Autowired
@@ -22,6 +20,9 @@ public class BookService {
 
     @Autowired
     private PublisherService publisherService;
+
+    @Autowired
+    private DescriptionService descriptionService;
 
     /*
 
@@ -33,28 +34,41 @@ public class BookService {
     */
 
     @Transactional
-    public void createBook(Long isbn, String title, Integer year, Integer copies, Integer idAuthor, Integer idPublisher) {
+    public void createBook(Long isbn, String title, Integer pages, LocalDate publicationDate, Integer numberOfCopies,
+                           Integer idAuthor, Integer idPublisher, String bookDescription) {
 
         Book book = new Book();
 
         book.setIsbn(isbn);
         book.setTitle(title);
-        book.setAuthor(authorService.showAuthor(idAuthor));
-        book.setPublicationYear(year);
-        book.setPublisher(publisherService.showPublisher(idPublisher));
-        book.setNumberOfCopies(copies);
+        book.setAuthor(authorService.findAuthorById(idAuthor));
+        book.setPublicationDate(publicationDate);
+        book.setPages(pages);
+        book.setPublisher(publisherService.findPublisherById(idPublisher));
+        book.setNumberOfCopies(numberOfCopies);
         book.setNumberOfCopiesLent(0);
-        book.setNumberOfCopiesAvailable(copies);
-        book.setCreationDate(LocalDate.now());
-        book.setLastModificationDate(LocalDate.now());
+        book.setNumberOfCopiesAvailable(numberOfCopies);
         book.setDeactivationDate(null);
+        book.setBookDescription(descriptionService.createDescription(bookDescription));
 
         bookRepository.save(book);
     }
 
     @Transactional
-    public void editTotalNumberOfCopies(Long isbn, Integer numberOfCopies, LocalDate lastModificationDate) {
-        bookRepository.editTotalNumberOfCopies(isbn, numberOfCopies, lastModificationDate);
+    public void editBook(Long isbn, String title, Integer pages, LocalDate publicationDate, Integer numberOfCopies,
+                         Integer idAuthor, Integer idPublisher, Integer idDescription, String bookDescription) {
+
+        descriptionService.editDescription(idDescription, bookDescription);
+        bookRepository.editBook(isbn, title, pages, publicationDate, numberOfCopies, idAuthor, idPublisher);
+    }
+
+    /*
+
+    NOT UTILIZED YET
+
+    @Transactional
+    public void editTotalNumberOfCopies(Long isbn, Integer numberOfCopies) {
+        bookRepository.editTotalNumberOfCopies(isbn, numberOfCopies);
     }
 
     @Transactional
@@ -64,7 +78,7 @@ public class BookService {
         book.setNumberOfCopiesLent(book.getNumberOfCopiesLent() + numberOfCopiesLentUser);
         book.setNumberOfCopiesAvailable(book.getNumberOfCopiesAvailable() - numberOfCopiesLentUser);
 
-        bookRepository.editNumberOfCopiesLentAndAvailable(isbn, book.getNumberOfCopiesLent(), book.getNumberOfCopiesAvailable(), LocalDate.now());
+        bookRepository.editNumberOfCopiesLentAndAvailable(isbn, book.getNumberOfCopiesLent(), book.getNumberOfCopiesAvailable());
     }
 
     @Transactional
@@ -74,17 +88,27 @@ public class BookService {
         book.setNumberOfCopiesLent(book.getNumberOfCopiesLent() - numberOfCopiesAvailableUser);
         book.setNumberOfCopiesAvailable(book.getNumberOfCopiesAvailable() + numberOfCopiesAvailableUser);
 
-        bookRepository.editNumberOfCopiesLentAndAvailable(isbn, book.getNumberOfCopiesLent(), book.getNumberOfCopiesAvailable(), LocalDate.now());
+        bookRepository.editNumberOfCopiesLentAndAvailable(isbn, book.getNumberOfCopiesLent(), book.getNumberOfCopiesAvailable());
     }
+
+     */
 
     @Transactional
     public void deactivateBook(Long isbn) {
-        bookRepository.deactivateBook(isbn, LocalDate.now(), LocalDate.now());
+        descriptionService.deactivateDescription(bookRepository.getById(isbn).getBookDescription().getIdDescription());
+        bookRepository.deactivateBook(isbn, LocalDate.now());
+    }
+
+    @Transactional(readOnly = true)
+    public Book findBookById(Long isbn) {
+        return bookRepository.getById(isbn);
     }
 
     @Transactional(readOnly = true)
     public Book showBook(Long isbn) {
-        return bookRepository.getById(isbn);
+        Book book =  bookRepository.getById(isbn);
+        book.setBookDescription(book.getBookDescription());
+        return book;
     }
 
     @Transactional(readOnly = true)

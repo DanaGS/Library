@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
   <nav
     th:fragment="readerNavbar"
-    class="navbar navbar-expand-md bg-black navbar-dark sticky-top mb-4"
+    class="navbar navbar-expand-md bg-black navbar-dark sticky-top"
   >
     <div class="container-fluid">
       <a class="navbar-brand mb-0 h1" th:href="@{/reader}">LITERARY CLUB</a>
@@ -24,7 +24,7 @@
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" th:href="@{/reader}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">DISCOVER</a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <ul class="dropdown-menu text-white" aria-labelledby="navbarDropdown">
                <li><a class="dropdown-item" th:href="@{/reader/books/all}">Books</a></li>
                <li><a class="dropdown-item" th:href="@{/reader/authors/all}">Authors</a></li>
                <li><a class="dropdown-item" th:href="@{/reader/publishers/all}">Publishers</a></li>
@@ -40,7 +40,7 @@
 
   <nav
     th:fragment="keeperNavbar"
-    class="navbar navbar-expand-md bg-black navbar-dark sticky-top mb-4"
+    class="navbar navbar-expand-md bg-black navbar-dark sticky-top mb-5"
   >
     <div class="container-fluid">
       <a class="navbar-brand mb-0 h1" th:href="@{/keeper}">LITERARY CLUB</a>
@@ -71,7 +71,7 @@
     </div>
   </nav>
 
-  <footer th:fragment="myFooter" class="footer bg-black text-center text-white text-muted mt-4">
+  <footer th:fragment="myFooter" class="footer bg-black text-center text-white text-muted mt-5">
       <div class="container d-flex justify-content-center py-5">
           &copy; Dana Gore Sierra - 2021
         </div>

@@ -11,35 +11,48 @@
     <meta name="author" content="Dana Gore Sierra" />
     <title>Literary Club</title>
     <link rel="stylesheet" th:href="@{/assets/bootstrap.min.css}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nova+Oval&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" th:href="@{/css/libraryStyle.css}" />
   </head>
   <body>
     <nav th:replace="fragments :: keeperNavbar"></nav>
-    <div class="container">
-      <h2 class="text-center">Publishers list</h2>
+
+    <div class="container text-center text-white pt-5">
+      <h2 class="fw-bolder mt-5">Publishers list</h2>
+      <div class="divider div-transparent div-dot"></div>
     </div>
 
-    <div class="container-lg">
+    <div class="container text-center text-white my-5 py-4">
       <div th:if="${publishers.isEmpty()}">
-        <div
-          class="row row-cols-1 my-2 align-items-center justify-content-center"
+        <p class="py-5 fs-5 fw-bold">There are no publishers ;-;</p>
+        <a
+          class="btn btn-dark"
+          role="button"
+          th:href="@{/keeper/publishers/add}"
+          >Add Publisher</a
         >
-          <div class="col-12">
-            <p>There are no publishers ;-;</p>
-          </div>
-        </div>
       </div>
+    </div>
+
+    <div class="container">
       <div th:unless="${publishers.isEmpty()}">
-        <div th:each="publisher : ${publishers}">
-          <div
-            class="
-              row-cols-1 row-cols-md-3
-              my-5
-              align-items-center
-              justify-content-center
-            "
-          >
-            <div class="col-12 col-md-8 col-lg-4 my-3">
+        <div
+          class="
+            row row-cols-2 row-cols-lg-4
+            mb-5
+            mt-2
+            g-3
+            align-items-center
+            justify-content-center
+          "
+        >
+          <div th:each="publisher : ${publishers}">
+            <div class="col my-3">
               <div class="card border-0 clickable-card authorCard">
                 <a
                   th:href="@{/keeper/publishers/edit/__${publisher.idPublisher}__}"
@@ -48,15 +61,15 @@
                   <img
                     th:src="@{/images/who-are-we.jpg}"
                     class="card-img-top"
-                    alt="Publisher"
+                    alt="Publisher logo"
                   />
                   <div class="card-body text-center py-4 my-2">
                     <p
-                      class="card-title my-2 text-black fw-bold"
+                      class="card-title my-2 text-white fw-bold"
                       th:text="${publisher.namePublisher}"
                     ></p>
                     <a
-                      class="btn btn-dark mb-2"
+                      class="btn btn-dark mt-3 mb-2"
                       th:href="@{/keeper/publishers/edit/__${publisher.idPublisher}__}"
                       role="button"
                       >Edit</a
@@ -65,9 +78,12 @@
                       method="post"
                       th:action="@{/keeper/publishers/delete/__${publisher.idPublisher}__}"
                     >
-                      <button class="btn btn-dark mb-2" type="submit">
-                        Delete
-                      </button>
+                      <input
+                        th:value="${publisher.aboutPublisher.idDescription}"
+                        type="hidden"
+                        name="idDescription"
+                      />
+                      <button class="btn btn-dark" type="submit">Delete</button>
                     </form>
                   </div>
                 </a>

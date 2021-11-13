@@ -4,14 +4,20 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity (name = "Books")
 @Table (name = "Books")
+@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter @Setter
 public class Book {
 
     // TODO: REMEMBER TO ADD "DESCRIPTION" FIELD TO BOOKS. ONLY SHOW "DESCRIPTION" WHEN USER CLICKS ON A BOOK
@@ -24,49 +30,56 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(nullable = false)
-    @Getter @Setter
     private Long isbn;
 
     @Column(nullable = false)
-    @Getter @Setter
     private String title;
 
-    @Getter @Setter
-    private Integer publicationYear;
+    @Column(columnDefinition = "DATE", nullable = false)
+    private LocalDate publicationDate;
+
+    @JoinColumn(nullable = false)
+    private Integer pages;
 
     @Column(nullable = false)
-    @Getter @Setter
     private Integer numberOfCopies;
 
     @Column(nullable = false)
-    @Getter @Setter
     private Integer numberOfCopiesLent;
 
     @Column(nullable = false)
-    @Getter @Setter
     private Integer numberOfCopiesAvailable;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(nullable = false)
-    @Getter @Setter
     private Author author;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(nullable = false)
-    @Getter @Setter
     private Publisher publisher;
 
     // https://www.baeldung.com/jpa-java-time
+    @CreatedDate
     @Column(columnDefinition = "DATE", nullable = false)
-    @Getter @Setter
     private LocalDate creationDate;
 
     @Column(columnDefinition = "DATE")
-    @Getter @Setter
     private LocalDate deactivationDate;
 
+    @LastModifiedDate
     @Column(columnDefinition = "DATE", nullable = false)
-    @Getter @Setter
     private LocalDate lastModificationDate;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private Description bookDescription;
+
+    /*
+
+    @Column(nullable = false)
+    private String bookCoverImgPath;
+
+    @Enumerated(EnumType.ORDINAL)
+    private List<Genre> genres;
+
+    */
 }

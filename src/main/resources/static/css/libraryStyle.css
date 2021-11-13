@@ -1,21 +1,170 @@
+.justify-text {
+  text-align: justify;
+}
+
 body {
   background-image: url(../images/3433.jpg);
-  background-color: black;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
+  font-family: "Nova Oval", cursive;
 }
 
-.centerContainer {
+.nightSky-header-root-container {
+  height: 100%;
+}
+
+.nightSky-header-container {
+  height: 400px;
+  position: absolute;
+  width: 100%;
+}
+
+.nightSky-header {
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  inset: 0px;
+  box-sizing: border-box;
+  margin: 0px;
+}
+
+.nightSky-header-content-container {
+  padding-top: 100px;
+  padding-bottom: 55px;
+  -moz-box-orient: horizontal;
+  -moz-box-direction: normal;
+  flex-direction: row;
+  -moz-box-pack: center;
+  justify-content: center;
+  display: flex;
+  position: relative;
+}
+
+.nightSky-header-content-inner-container {
+  -moz-box-orient: horizontal;
+  -moz-box-direction: normal;
+  flex-direction: row;
+  width: 600px;
+  display: flex;
+  -moz-box-align: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.nightSky-header-image-container {
+  flex-shrink: 0;
+  width: 217px;
+  height: 336px;
+  position: relative;
+}
+
+.nightSky-header-image-inner-container {
+  width: 217px;
+  height: 336px;
+  position: relative;
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  inset: 0px;
+  box-sizing: border-box;
+  margin: 0px;
+}
+
+.nightSky-header-title-container {
+  margin-top: -10px;
+  padding-top: 0;
+  padding-left: 15px;
+  -moz-box-align: unset;
+  align-items: unset;
+}
+
+.nightSky-header-title {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.05;
+  margin-top: 8px;
+  margin-bottom: 12px;
+  white-space: pre-line;
+}
+
+img .nightSky-header-image {
+  position: absolute;
+  inset: 0px;
+  box-sizing: border-box;
+  padding: 0px;
+  border: medium none;
+  margin: auto;
+  display: block;
+  width: 0px;
+  height: 0px;
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 100%;
+  max-height: 100%;
+  border-radius: 10px;
+}
+img .nightSky {
+  position: absolute;
+  inset: 0px;
+  box-sizing: border-box;
+  padding: 0px;
+  border: medium none;
+  margin: auto;
+  display: block;
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+.img-responsive {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+}
+
+.centerContainerWhoAreYou {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+.centerContainer {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  flex-direction: column;
+}
+
+.text-container {
+  width: 75%;
+  max-width: 45em;
+  margin: 0.55556em auto 0;
+  text-align: center;
+  padding-bottom: 4.44444em;
+}
+
+.text-block {
+  font-size: 17px;
+  line-height: 36px;
+}
+
+.carousel-container {
+  max-width: 70em;
+  margin: 0 auto;
+  width: 75%;
+  text-align: center;
+  padding-bottom: 5.55556em;
+}
 .navbar-brand {
-  padding: 30px;
+  padding: 40px;
   padding-left: 60px;
   font-size: 24px;
 }
@@ -30,10 +179,50 @@ body {
 }
 
 .dropdown-menu {
-  font-size: 13px;
+  position: relative;
 }
 
-.card {
+.dropdown-menu ul {
+  height: 10vh;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 13px;
+
+  position: absolute;
+  background: rgb(39, 39, 39);
+  margin-top: 10px;
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  list-style: none;
+  border-radius: 5px;
+  transform: translateY(10px);
+  transition: all 0.4s ease;
+}
+
+.dropdown-menu li {
+  background-color: black;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dropdown-menu li:hover {
+  background-color: rgb(32, 32, 32);
+}
+
+.dropdown-item:hover {
+  color: rgb(109, 109, 109);
+}
+
+.card.who-are-you {
   background: rgb(39, 39, 39);
   border-radius: 10px;
 }
@@ -45,9 +234,20 @@ body {
 }
 
 .authorCard {
-  background: rgb(255, 255, 255);
-  opacity: 0.8;
+  background: none;
   border-radius: 10px;
+}
+
+/*img {
+  border-radius: 10px;
+}*/
+
+.translucent-gradient img {
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 50%,
+    transparent 100%
+  );
 }
 
 .card-img {
@@ -86,4 +286,86 @@ body {
 .btn:hover {
   background: rgb(17, 17, 17);
   color: white;
+}
+
+/* Works on Firefox */
+* {
+  scrollbar-width: 8px;
+  scrollbar-color: rgb(77, 76, 76) rgb(15, 15, 15);
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgb(15, 15, 15);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(77, 76, 76);
+}
+
+/*.form-container {
+  width: 340px; 
+  margin: auto;
+} */
+
+.input-container {
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  line-height: 50px;
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .stretch-input {
+    width: 500px;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .stretch-input {
+    width: 750px;
+  }
+}
+
+.divider {
+  position: relative;
+  margin-top: 90px;
+  height: 1px;
+}
+
+.div-transparent:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 5%;
+  right: 5%;
+  width: 90%;
+  height: 2px;
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    rgb(22, 23, 24),
+    transparent
+  );
+}
+
+.div-dot:after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: -9px;
+  left: calc(50% - 9px);
+  width: 18px;
+  height: 18px;
+  background-color: goldenrod;
+  border: 1px solid rgb(48, 49, 51);
+  border-radius: 50%;
 }

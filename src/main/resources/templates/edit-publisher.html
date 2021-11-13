@@ -11,41 +11,108 @@
     <meta name="author" content="Dana Gore Sierra" />
     <title>Literary Club</title>
     <link rel="stylesheet" th:href="@{/assets/bootstrap.min.css}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nova+Oval&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" th:href="@{/css/libraryStyle.css}" />
   </head>
   <body>
     <nav th:replace="fragments :: keeperNavbar"></nav>
-    <div class="container">
-      <h2 class="text-center">Edit Publisher</h2>
-    </div>
-    <div class="container centerContainer">
-      <form
-        autocomplete="off"
-        class="needs-validation"
-        method="post"
-        th:action="@{/keeper/publishers/done}"
-        th:object="${publisher}"
-      >
-        <input th:field="*{idPublisher}" type="hidden" />
-        <div class="form-floating mb-3 col-8 col-lg-6 col col-xl-5">
+    <div class="container mt-5 py-5">
+      <div class="container">
+        <h2 class="text-center text-white fw-bold">Edit Publisher</h2>
+      </div>
+      <div class="divider div-transparent div-dot"></div>
+      <div class="input-container col-12 pt-5">
+        <form
+          autocomplete="off"
+          class="needs-validation text-white fw-bold"
+          method="post"
+          th:action="@{/keeper/publishers/done}"
+          th:object="${publisher}"
+        >
+          <input th:field="*{idPublisher}" type="hidden" />
+          <label for="name" class="form-label">Publisher Name *</label>
           <input
-            class="form-control"
+            class="form-control py-2 stretch-input"
             id="name"
             required
             th:field="*{namePublisher}"
             type="text"
           />
-          <label for="name">Publisher Name *</label>
           <div class="invalid-feedback">Publisher Name Required</div>
-        </div>
-        <button class="btn btn-dark mb-1" type="submit">SAVE</button>
-        <form
-          method="post"
-          th:action="@{/keeper/publishers/delete/__${publisher.idPublisher}__}"
-        >
-          <button class="btn btn-dark mb-2" type="submit">DELETE</button>
+          <div class="mb-2">
+            <input th:field="*{aboutPublisher.idDescription}" type="hidden" />
+            <label for="aboutPublisher" class="form-label">Mini history</label>
+            <textarea
+              class="form-control stretch-input"
+              id="aboutPublisher"
+              rows="20"
+              th:field="*{aboutPublisher.description}"
+            ></textarea>
+          </div>
+          <label for="creationDate" class="form-label">Created On</label>
+          <input
+            class="form-control py-2 stretch-input"
+            id="creationDate"
+            disabled
+            th:value="*{creationDate}"
+            type="date"
+          />
+          <label for="lastModificationDate" class="form-label"
+            >Last Modified On</label
+          >
+          <input
+            class="form-control py-2 stretch-input"
+            id="lastModificationDate"
+            disabled
+            th:value="*{lastModificationDate}"
+            type="date"
+          />
+          <label for="deactivationDate" class="form-label"
+            >Deactivated On</label
+          >
+          <div th:if="*{deactivationDate == null}">
+            <input
+              class="form-control py-2 stretch-input"
+              id="deactivationDate"
+              disabled
+              placeholder=" - "
+              type="text"
+            />
+          </div>
+          <div th:unless="*{deactivationDate == null}">
+            <input
+              class="form-control py-2 stretch-input"
+              id="deactivationDate"
+              disabled
+              th:value="*{deactivationDate}"
+              type="date"
+            />
+          </div>
+          <a
+            th:href="@{/keeper/publishers/all}"
+            class="btn btn-dark mt-4"
+            role="button"
+            >CANCEL</a
+          >
+          <button class="btn btn-dark mt-3" type="submit">SAVE</button>
+          <form
+            method="post"
+            th:action="@{/keeper/publishers/delete/__${publisher.idPublisher}__}"
+          >
+            <input
+              th:value="${aboutPublisher.idDescription}"
+              type="hidden"
+              name="idDescription"
+            />
+            <button class="btn btn-dark mt-3" type="submit">DELETE</button>
+          </form>
         </form>
-      </form>
+      </div>
     </div>
     <footer th:replace="fragments :: myFooter"></footer>
     <script th:src="@{/assets/bootstrap.bundle.min.js}"></script>

@@ -20,29 +20,21 @@
     <link rel="stylesheet" th:href="@{/css/libraryStyle.css}" />
   </head>
   <body>
-    <nav th:replace="fragments :: keeperNavbar"></nav>
+    <nav th:replace="fragments :: readerNavbar"></nav>
     <div class="container text-center text-white pt-5">
-      <h2 class="fw-bolder mt-5">Authors list</h2>
+      <h5 class="pt-5">Discover amazing stories</h5>
+      <h1 class="pt-4 fw-bolder">Books</h1>
       <div class="divider div-transparent div-dot"></div>
     </div>
 
-    <div
-      class="alert alert-success mt-5"
-      th:if="${authorSuccessMessage != null}"
-      th:text="${authorSuccessMessage}"
-    ></div>
-
-    <div class="container text-center text-white mb-5 py-4">
-      <div th:if="${authors.isEmpty()}">
-        <p class="py-5 fs-5 fw-bold">There are no authors ;-;</p>
-        <a class="btn btn-dark" role="button" th:href="@{/keeper/authors/add}"
-          >Add Author</a
-        >
+    <div class="container text-center text-white my-5 py-4">
+      <div th:if="${books.isEmpty()}">
+        <p class="py-5 fs-5 fw-bold">There are no books ;-;</p>
       </div>
     </div>
 
     <div class="container">
-      <div th:unless="${authors.isEmpty()}">
+      <div th:unless="${books.isEmpty()}">
         <div
           class="
             row row-cols-2 row-cols-lg-4
@@ -53,40 +45,23 @@
             justify-content-center
           "
         >
-          <div th:each="author : ${authors}">
+          <div th:each="book : ${books}">
             <div class="col my-3">
               <div class="card border-0 clickable-card authorCard">
                 <a
-                  th:href="@{/keeper/authors/edit/__${author.idAuthor}__}"
+                  th:href="@{/reader/books/__${title}__/__${isbn}__}"
                   class="text-decoration-none"
                 >
                   <img
                     th:src="@{/images/who-are-we.jpg}"
                     class="card-img-top"
-                    alt="Portrait of Author"
+                    alt="Book Cover"
                   />
                   <div class="card-body text-center py-4 my-2">
                     <p
-                      class="card-title my-2 text-white fw-bold"
-                      th:text="${author.nameAuthor}"
+                      class="card-title my-2 text-black fw-bold"
+                      th:text="${book.title}"
                     ></p>
-                    <a
-                      class="btn btn-dark mt-3 mb-2"
-                      th:href="@{/keeper/authors/edit/__${author.idAuthor}__}"
-                      role="button"
-                      >Edit</a
-                    >
-                    <form
-                      method="post"
-                      th:action="@{/keeper/authors/delete/__${author.idAuthor}__}"
-                    >
-                      <input
-                        th:value="${author.aboutAuthor.idDescription}"
-                        type="hidden"
-                        name="idDescription"
-                      />
-                      <button class="btn btn-dark" type="submit">Delete</button>
-                    </form>
                   </div>
                 </a>
               </div>

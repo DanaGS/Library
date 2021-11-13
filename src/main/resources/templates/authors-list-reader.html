@@ -11,38 +11,45 @@
     <meta name="author" content="Dana Gore Sierra" />
     <title>Literary Club</title>
     <link rel="stylesheet" th:href="@{/assets/bootstrap.min.css}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nova+Oval&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" th:href="@{/css/libraryStyle.css}" />
   </head>
   <body>
     <nav th:replace="fragments :: readerNavbar"></nav>
-    <div class="container">
-      <h2 class="text-center">Discover the brilliant writers of our time</h2>
+    <div class="container text-center text-white pt-5">
+      <h5 class="pt-5">Discover the brilliant writers of our time</h5>
+      <h1 class="pt-4 fw-bolder">Authors</h1>
+      <div class="divider div-transparent div-dot"></div>
     </div>
 
-    <div class="container-lg">
+    <div class="container text-center text-white my-5 py-4">
       <div th:if="${authors.isEmpty()}">
-        <div
-          class="row row-cols-1 my-2 align-items-center justify-content-center"
-        >
-          <div class="col-12">
-            <p>There are no authors ;-;</p>
-          </div>
-        </div>
+        <p class="py-5 fs-5 fw-bold">There are no authors ;-;</p>
       </div>
+    </div>
+
+    <div class="container">
       <div th:unless="${authors.isEmpty()}">
-        <div th:each="author : ${authors}">
-          <div
-            class="
-              row-cols-1 row-cols-md-3
-              my-5
-              align-items-center
-              justify-content-center
-            "
-          >
-            <div class="col-12 col-md-8 col-lg-4 my-3">
+        <div
+          class="
+            row row-cols-2 row-cols-lg-4
+            mb-5
+            mt-2
+            g-3
+            align-items-center
+            justify-content-center
+          "
+        >
+          <div th:each="author : ${authors}">
+            <div class="col my-3">
               <div class="card border-0 clickable-card authorCard">
                 <a
-                  th:href="@{/reader/authors/__${nameAuthor}__/__${idAuthor}__}"
+                  th:href="@{/reader/authors/__${author.nameAuthor}__/__${author.idAuthor}__}"
                   class="text-decoration-none"
                 >
                   <img

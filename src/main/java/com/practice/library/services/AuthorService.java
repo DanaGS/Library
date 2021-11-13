@@ -2,9 +2,7 @@ package com.practice.library.services;
 
 import com.practice.library.entities.Author;
 import com.practice.library.entities.Book;
-import com.practice.library.entities.Publisher;
 import com.practice.library.repository.AuthorRepo;
-import com.practice.library.repository.BookRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AuthorService {
@@ -20,51 +19,58 @@ public class AuthorService {
     private AuthorRepo authorRepository;
 
     @Autowired
-    private BookRepo bookRepository;
+    private DescriptionService descriptionService;
 
     @Transactional
-    public void addAuthor(String name) {
+    public void addAuthor(String name, String aboutAuthor) {
+
         Author author = new Author();
-        List<Book> books = new ArrayList<Book>();
+        List<Book> books = new ArrayList<>();
+
         author.setNameAuthor(name);
         author.setBooks(books);
-        author.setCreationDate(LocalDate.now());
-        author.setLastModificationDate(LocalDate.now());
         author.setDeactivationDate(null);
+        author.setAboutAuthor(descriptionService.createDescription(aboutAuthor));
 
         authorRepository.save(author);
     }
 
-
     @Transactional
-    public void editAuthorName(Integer idAuthor, String nameAuthor) {
-        authorRepository.editAuthorName(idAuthor, nameAuthor, LocalDate.now());
+    public void editAuthor(Integer idAuthor, String nameAuthor, Integer idDescription, String aboutAuthor) {
+
+        Author author = findAuthorById(idAuthor);
+
+        /*
+
+        if (author == null) {
+            throw new LibraryException("Author does not exist!");
+        }
+
+        */
+
+        descriptionService.editDescription(idDescription, aboutAuthor);
+        authorRepository.editAuthor(idAuthor, nameAuthor);
     }
 
     @Transactional
-    public void addAuthorBooks(Integer idAuthor, Book book) {
-        List<Book> books = authorRepository.getById(idAuthor).getBooks();
-        books.add(book);
-        authorRepository.editBooks(idAuthor, books, LocalDate.now());
-    }
-
-    @Transactional
-    public void removeAuthorBooks(Integer idAuthor, Book book) {
-        List<Book> books = authorRepository.getById(idAuthor).getBooks();
-        books.remove(book);
-        bookRepository.deactivateBook(book.getIsbn(), LocalDate.now(), LocalDate.now());
-        authorRepository.editBooks(idAuthor, books, LocalDate.now());
-    }
-
-    @Transactional
-    public void deactivateAuthor(Integer idAuthor) {
-        authorRepository.deactivateAuthor(idAuthor, LocalDate.now(), LocalDate.now());
+    public void deactivateAuthor(Integer idAuthor, Integer idDescription) {
+        authorRepository.deactivateAuthor(idAuthor, LocalDate.now());
+        descriptionService.deactivateDescription(idDescription);
         //authorRepository.deleteById(idAuthor);
     }
 
     @Transactional(readOnly = true)
+    public Author findAuthorById(Integer idAuthor) {
+        Optional<Author> optionalAuthor = authorRepository.findById(idAuthor);
+        return optionalAuthor.orElse(null);
+    }
+
+    @Transactional(readOnly = true)
     public Author showAuthor(Integer idAuthor) {
-        return authorRepository.getById(idAuthor);
+        Author author = authorRepository.getById(idAuthor);
+        author.setAboutAuthor(author.getAboutAuthor());
+        author.setBooks(author.getBooks());
+        return author;
     }
 
     @Transactional(readOnly = true)

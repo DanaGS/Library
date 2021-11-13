@@ -52,14 +52,16 @@ public class PublisherController {
     }
 
     @PostMapping("/keeper/publishers/done")
-    public RedirectView editPublisherName(@RequestParam Integer idPublisher, @RequestParam String namePublisher) {
-        publisherService.editPublisherName(idPublisher, namePublisher);
+    public RedirectView editPublisher(@RequestParam Integer idPublisher, @RequestParam String namePublisher,
+                                      @RequestParam("aboutPublisher.idDescription") Integer idDescription,
+                                      @RequestParam("aboutPublisher.description") String aboutPublisher) {
+        publisherService.editPublisher(idPublisher, namePublisher, idDescription, aboutPublisher);
         return new RedirectView("/keeper/publishers/all");
     }
 
     @PostMapping("/keeper/publishers/delete/{idPublisher}")
-    public RedirectView deletePublisher(@PathVariable Integer idPublisher) {
-        publisherService.deactivatePublisher(idPublisher);
+    public RedirectView deletePublisher(@PathVariable Integer idPublisher, @RequestParam Integer idDescription) {
+        publisherService.deactivatePublisher(idPublisher, idDescription);
         return new RedirectView("/keeper/publishers/all");
     }
 
@@ -72,8 +74,8 @@ public class PublisherController {
     }
 
     @PostMapping("/keeper/publishers/save")
-    public RedirectView addPublisher(@RequestParam String namePublisher) {
-        publisherService.addPublisher(namePublisher);
+    public RedirectView addPublisher(@RequestParam String namePublisher, @RequestParam String aboutPublisher) {
+        publisherService.addPublisher(namePublisher, aboutPublisher);
         return new RedirectView("/keeper/publishers/all");
     }
 }

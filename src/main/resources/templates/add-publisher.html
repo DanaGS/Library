@@ -11,33 +11,59 @@
     <meta name="author" content="Dana Gore Sierra" />
     <title>Literary Club</title>
     <link rel="stylesheet" th:href="@{/assets/bootstrap.min.css}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nova+Oval&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" th:href="@{/css/libraryStyle.css}" />
   </head>
   <body>
     <nav th:replace="fragments :: keeperNavbar"></nav>
-    <div class="container">
-      <h2 class="text-center">Add an publisher to our great collection!</h2>
-    </div>
-    <div class="container centerContainer">
-      <form
-        autocomplete="off"
-        class="needs-validation"
-        method="post"
-        th:action="@{/keeper/publishers/save}"
-        th:object="${publisher}"
-      >
-        <div class="form-floating mb-3 col-8 col-lg-6 col col-xl-5">
+    <div class="container mt-5 py-5">
+      <div class="container">
+        <h2 class="text-center text-white fw-bold mx-5">
+          Add an publisher to our great collection!
+        </h2>
+      </div>
+      <div class="divider div-transparent div-dot"></div>
+      <div class="input-container col-12 pt-5">
+        <form
+          autocomplete="off"
+          class="needs-validation text-white fw-bold"
+          method="post"
+          th:action="@{/keeper/publishers/save}"
+          th:object="${publisher}"
+        >
+          <label for="name" class="form-label">Publisher Name *</label>
           <input
-            class="form-control"
+            class="form-control py-2 stretch-input"
             id="name"
             required
             th:field="*{namePublisher}"
             type="text"
           />
-          <label for="name">Publisher Name *</label>
           <div class="invalid-feedback">Publisher Name Required</div>
-        </div>
-        <button class="btn btn-dark mb-1" type="submit">SAVE</button>
+          <div class="mb-2">
+            <label for="aboutPublisher" class="form-label">Mini history</label>
+            <textarea
+              class="form-control stretch-input"
+              id="aboutPublisher"
+              rows="20"
+              th:field="*{aboutPublisher}"
+            ></textarea>
+          </div>
+          <a
+            th:href="@{/keeper/publishers/all}"
+            class="btn btn-dark mt-4"
+            role="button"
+            >CANCEL</a
+          >
+          <button class="btn btn-dark mt-3" type="submit">SAVE</button>
+        </form>
+      </div>
+    </div>
     <footer th:replace="fragments :: myFooter"></footer>
     <script th:src="@{/assets/bootstrap.bundle.min.js}"></script>
   </body>

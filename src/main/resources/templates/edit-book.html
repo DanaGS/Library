@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A library with attitude (and CSS), that hits different."
+    />
+    <meta name="author" content="Dana Gore Sierra" />
+    <title>Literary Club</title>
+    <link rel="stylesheet" th:href="@{/assets/bootstrap.min.css}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nova+Oval&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" th:href="@{/css/libraryStyle.css}" />
+  </head>
+  <body>
+    <nav th:replace="fragments :: keeperNavbar"></nav>
+    <div class="container mt-5 py-5">
+      <div class="container">
+        <h2 class="text-center text-white fw-bold mx-5">Edit Book</h2>
+      </div>
+      <div class="divider div-transparent div-dot"></div>
+      <div class="input-container col-12 pt-5">
+        <form
+          autocomplete="off"
+          class="needs-validation text-white fw-bold"
+          method="post"
+          th:action="@{/keeper/books/done}"
+          th:object="${book}"
+        >
+          <label for="isbn" class="form-label">ISBN *</label>
+          <input
+            class="form-control py-2 stretch-input"
+            id="isbn"
+            required
+            th:field="*{isbn}"
+            type="number"
+          />
+          <div class="invalid-feedback">ISBN Required</div>
+          <label for="name" class="form-label">Title *</label>
+          <input
+            class="form-control py-2 stretch-input"
+            id="name"
+            required
+            th:field="*{title}"
+            type="text"
+          />
+          <div class="invalid-feedback">Book Title Required</div>
+          <label for="pages" class="form-label">Number of Pages *</label>
+          <input
+            class="form-control py-2 stretch-input"
+            id="pages"
+            required
+            th:field="*{pages}"
+            type="number"
+          />
+          <div class="invalid-feedback">Number of Pages Required</div>
+          <label for="publicationDate" class="form-label"
+            >Publication Date *</label
+          >
+          <input
+            class="form-control py-2 stretch-input"
+            id="publicationDate"
+            required
+            th:field="*{publicationDate}"
+            type="date"
+          />
+          <div class="invalid-feedback">Publication Date Required</div>
+          <label for="numberOfCopies" class="form-label"
+            >Total Number of Copies *</label
+          >
+          <input
+            class="form-control py-2 stretch-input"
+            id="numberOfCopies"
+            required
+            th:field="*{numberOfCopies}"
+            type="number"
+          />
+          <div class="invalid-feedback">Number of Copies Required</div>
+          <label for="author" class="form-label">Author</label>
+          <input
+            class="form-control"
+            list="authorOptions"
+            id="author"
+            placeholder="Type to search authors..."
+            th:field="*{author}"
+          />
+          <datalist id="authorOptions">
+            <option
+              th:each="author : ${authors}"
+              th:value="${author.idAuthor}"
+              th:text="${author.nameAuthor}"
+            ></option>
+          </datalist>
+          <label for="publisher" class="form-label">Publisher</label>
+          <input
+            class="form-control"
+            list="publisherOptions"
+            id="publisher"
+            placeholder="Type to search publishers..."
+            th:field="*{publisher}"
+          />
+          <datalist id="publisherOptions">
+            <option
+              th:each="publisher : ${publishers}"
+              th:value="${publisher.idPublisher}"
+              th:text="${publisher.namePublisher}"
+            ></option>
+          </datalist>
+          <div class="mb-2">
+            <label for="bookDescription" class="form-label">Mini Summary</label>
+            <textarea
+              class="form-control stretch-input"
+              id="bookDescription"
+              rows="20"
+              th:field="*{bookDescription.description}"
+            ></textarea>
+          </div>
+          <a
+            th:href="@{/keeper/books/all}"
+            class="btn btn-dark mt-4"
+            role="button"
+            >CANCEL</a
+          >
+          <button class="btn btn-dark mt-3" type="submit">SAVE</button>
+          <form
+            method="post"
+            th:action="@{/keeper/books/delete/__${book.isbn}__}"
+          >
+            <input
+              th:value="${bookDescription.idDescription}"
+              type="hidden"
+              name="idDescription"
+            />
+            <button class="btn btn-dark mt-3" type="submit">DELETE</button>
+          </form>
+        </form>
+      </div>
+    </div>
+    <footer th:replace="fragments :: myFooter"></footer>
+    <script th:src="@{/assets/bootstrap.bundle.min.js}"></script>
+  </body>
+</html>

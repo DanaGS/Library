@@ -19,23 +19,35 @@ public interface BookRepo extends JpaRepository<Book, Long> { // JpaRepository<E
     */
 
     @Modifying
-    @Query("UPDATE Books b SET b.numberOfCopies = :numberOfCopies, b.lastModificationDate = :lastModificationDate WHERE b.isbn = :isbn") // Remember to update "numberOfCopiesAvailable"
-    void editTotalNumberOfCopies(@Param("isbn") Long isbn, @Param("numberOfCopies") Integer numberOfCopies, @Param("lastModificationDate") LocalDate lastModificationDate);
+    @Query("UPDATE Books b SET b.title = :title, b.pages = :pages, b.publicationDate = :publicationDate, b.numberOfCopies = :numberOfCopies, " +
+            "b.author = :idAuthor, b.publisher = :idPublisher WHERE b.isbn = :isbn")
+    void editBook(@Param("isbn") Long isbn, @Param("title") String title, @Param("pages") Integer pages, @Param("publicationDate")
+                  LocalDate publicationDate, @Param("numberOfCopies") Integer numberOfCopies, @Param("idAuthor") Integer idAuthor,
+                  @Param("idPublisher") Integer idPublisher);
 
     @Modifying
-    @Query("UPDATE Books b SET b.numberOfCopiesLent = :numberOfCopiesLent, b.numberOfCopiesAvailable = :numberOfCopiesAvailable, b.lastModificationDate = :lastModificationDate WHERE b.isbn = :isbn")
+    @Query("UPDATE Books b SET b.numberOfCopies = :numberOfCopies WHERE b.isbn = :isbn") // Remember to update "numberOfCopiesAvailable"
+    void editTotalNumberOfCopies(@Param("isbn") Long isbn, @Param("numberOfCopies") Integer numberOfCopies);
+
+    @Modifying
+    @Query("UPDATE Books b SET b.numberOfCopiesLent = :numberOfCopiesLent, b.numberOfCopiesAvailable = :numberOfCopiesAvailable WHERE b.isbn = :isbn")
     void editNumberOfCopiesLentAndAvailable(@Param("isbn") Long isbn,
                                             @Param("numberOfCopiesLent") Integer numberOfCopiesLent,
-                                            @Param("numberOfCopiesAvailable") Integer numberOfCopiesAvailable,
-                                            @Param("lastModificationDate") LocalDate lastModificationDate);
+                                            @Param("numberOfCopiesAvailable") Integer numberOfCopiesAvailable);
 
     @Modifying
-    @Query("UPDATE Books b SET b.deactivationDate = :deactivationDate, b.lastModificationDate = :lastModificationDate WHERE b.isbn = :isbn")
-    void deactivateBook(@Param("isbn") Long isbn, @Param("deactivationDate") LocalDate deactivationDate, @Param("lastModificationDate") LocalDate lastModificationDate);
+    @Query("UPDATE Books b SET b.deactivationDate = :deactivationDate WHERE b.isbn = :isbn")
+    void deactivateBook(@Param("isbn") Long isbn, @Param("deactivationDate") LocalDate deactivationDate);
 
     @Query("SELECT b FROM Books b WHERE (b.deactivationDate IS NULL) AND (b.title LIKE :title)")
     List<Book> searchBooksByTitle(@Param("title") String title);
 
     @Query("SELECT b FROM Books b WHERE b.deactivationDate IS NULL")
     List<Book> searchBooks();
+
+    /*
+    * List<Autor> findByAltaTrue();
+    * List<Autor> findByAltaTrueOrderByNombreAsc();
+    * Autor findByNombreIgnoreCase(String nombre);
+    */
 }
