@@ -1,0 +1,144 @@
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
+body {
+  background-color: #202020;
+  font-family: "Nova Oval", cursive;
+}
+
+.authenticationRoot {
+  margin: 90px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.authenticationContainer {
+  width: 400px;
+  margin: 0 auto;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 24px;
+}
+
+.authenticationTitle {
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.authenticationFormContainer {
+  margin: 0 auto;
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.authenticationInputContainer {
+  box-sizing: inherit;
+  width: 100%;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.authenticationLabel {
+  text-transform: uppercase;
+  font-size: 13px;
+  color: #fff;
+  position: relative;
+  font-weight: 700;
+  margin-bottom: 11px;
+}
+
+.authenticationInputText {
+  display: flex;
+  width: 100%;
+  font-size: 13.5px;
+  position: relative;
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: 1.1px;
+}
+
+.text {
+  font-size: 13.5px;
+  margin-top: 12px;
+  display: block;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+.error {
+  color: #ff6e6e;
+}
+
+.success {
+  color: #6eff86;
+}
+
+.link-text {
+  font-size: 17px;
+  margin-top: 17px;
+  color: goldenrod;
+  text-decoration: underline;
+  opacity: 0.6;
+}
+
+.link-text:hover {
+  font-size: 17px;
+  margin-top: 17px;
+  color: goldenrod;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.authenticationButtonContainer {
+  width: 100%;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.authenticationButton {
+  color: #202020;
+  background-color: goldenrod;
+
+  width: 100%;
+  height: 48px;
+
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: 1.1px;
+  text-align-last: center;
+
+  opacity: 0.5;
+
+  padding: 14px 31px;
+  border-radius: 30px;
+  border-width: 0;
+  display: inline-block;
+}
+
+.authenticationButton:hover {
+  opacity: 0.7;
+}

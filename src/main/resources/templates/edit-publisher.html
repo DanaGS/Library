@@ -105,7 +105,7 @@
             th:action="@{/keeper/publishers/delete/__${publisher.idPublisher}__}"
           >
             <input
-              th:value="${aboutPublisher.idDescription}"
+              th:value="*{aboutPublisher.idDescription}"
               type="hidden"
               name="idDescription"
             />

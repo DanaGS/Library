@@ -84,35 +84,61 @@
           />
           <div class="invalid-feedback">Number of Copies Required</div>
           <label for="author" class="form-label">Author</label>
-          <input
-            class="form-control"
-            list="authorOptions"
-            id="author"
-            placeholder="Type to search authors..."
-            th:field="*{author}"
-          />
-          <datalist id="authorOptions">
-            <option
-              th:each="author : ${authors}"
-              th:value="${author.idAuthor}"
-              th:text="${author.nameAuthor}"
-            ></option>
-          </datalist>
+          <div class="row row-cols-1 row-cols-md-2 g-3">
+            <div class="col-12 col-md-8">
+              <select
+                class="form-select py-2"
+                aria-label="authorOptions"
+                th:field="*{author}"
+                required
+              >
+                <option selected disabled value="">Search authors...</option>
+                <option
+                  id="author"
+                  th:each="author : ${authors}"
+                  th:text="${author.nameAuthor}"
+                  th:value="${author.idAuthor}"
+                ></option>
+              </select>
+            </div>
+            <div class="col-12 col-md-4">
+              <a
+                class="btn btn-dark"
+                role="button"
+                th:href="@{/keeper/authors/add}"
+                >Add Author</a
+              >
+            </div>
+          </div>
+
           <label for="publisher" class="form-label">Publisher</label>
-          <input
-            class="form-control"
-            list="publisherOptions"
-            id="publisher"
-            placeholder="Type to search publishers..."
-            th:field="*{publisher}"
-          />
-          <datalist id="publisherOptions">
-            <option
-              th:each="publisher : ${publishers}"
-              th:value="${publisher.idPublisher}"
-              th:text="${publisher.namePublisher}"
-            ></option>
-          </datalist>
+          <div class="row row-cols-1 row-cols-md-2 g-3">
+            <div class="col-12 col-md-8">
+              <select
+                class="form-select py-2"
+                aria-label="publisherOptions"
+                aria-placeholder="Search publishers..."
+                th:field="*{publisher}"
+                required
+              >
+                <option selected disabled value="">Search publishers...</option>
+                <option
+                  id="publisher"
+                  th:each="publisher : ${publishers}"
+                  th:text="${publisher.namePublisher}"
+                  th:value="${publisher.idPublisher}"
+                ></option>
+              </select>
+            </div>
+            <div class="col-12 col-md-4">
+              <a
+                class="btn btn-dark"
+                role="button"
+                th:href="@{/keeper/publishers/add}"
+                >Add Publisher</a
+              >
+            </div>
+          </div>
           <div class="mb-2">
             <label for="bookDescription" class="form-label">Mini Summary</label>
             <textarea
@@ -134,7 +160,7 @@
             th:action="@{/keeper/books/delete/__${book.isbn}__}"
           >
             <input
-              th:value="${bookDescription.idDescription}"
+              th:value="*{bookDescription.idDescription}"
               type="hidden"
               name="idDescription"
             />

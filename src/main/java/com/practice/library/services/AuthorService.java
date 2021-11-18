@@ -2,7 +2,9 @@ package com.practice.library.services;
 
 import com.practice.library.entities.Author;
 import com.practice.library.entities.Book;
+import com.practice.library.exceptions.LibraryException;
 import com.practice.library.repository.AuthorRepo;
+import com.practice.library.utilities.LibraryValidations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +24,9 @@ public class AuthorService {
     private DescriptionService descriptionService;
 
     @Transactional
-    public void addAuthor(String name, String aboutAuthor) {
+    public void addAuthor(String name, String aboutAuthor) throws LibraryException {
+
+        authorValidations(name, aboutAuthor);
 
         Author author = new Author();
         List<Book> books = new ArrayList<>();
@@ -35,21 +39,26 @@ public class AuthorService {
         authorRepository.save(author);
     }
 
+    public void authorValidations(String name, String aboutAuthor) throws LibraryException {
+
+        LibraryValidations.nullCheck(name, "Author Name");
+        LibraryValidations.nullCheck(aboutAuthor, "Author Bio");
+        LibraryValidations.validNameCheck(name, "Author Name");
+    }
+
     @Transactional
-    public void editAuthor(Integer idAuthor, String nameAuthor, Integer idDescription, String aboutAuthor) {
+    public void editAuthor(Integer idAuthor, String nameAuthor, Integer idDescription, String aboutAuthor) throws LibraryException {
+        LibraryValidations.nullCheck(idAuthor.toString(), "IdAuthor");
+        LibraryValidations.validNumberCheck(idAuthor, "Id Author");
 
-        Author author = findAuthorById(idAuthor);
+        if (findAuthorById(idAuthor) != null) {
+            authorValidations(nameAuthor, aboutAuthor);
 
-        /*
-
-        if (author == null) {
+            descriptionService.editDescription(idDescription, aboutAuthor);
+            authorRepository.editAuthor(idAuthor, nameAuthor);
+        } else {
             throw new LibraryException("Author does not exist!");
         }
-
-        */
-
-        descriptionService.editDescription(idDescription, aboutAuthor);
-        authorRepository.editAuthor(idAuthor, nameAuthor);
     }
 
     @Transactional

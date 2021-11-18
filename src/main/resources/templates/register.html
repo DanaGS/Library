@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A library with attitude (and CSS), that hits different."
+    />
+    <meta name="author" content="Dana Gore Sierra" />
+    <title>Literary Club</title>
+    <link rel="stylesheet" th:href="@{/assets/bootstrap.min.css}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nova+Oval&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" th:href="@{/css/log-in.css}" />
+    <link rel="stylesheet" th:href="@{/css/libraryStyle.css}" />
+  </head>
+  <body>
+    <div class="authenticationRoot">
+      <div class="authenticationContainer">
+        <section class="authenticationTitle">
+          <h1 class="text-center mb-2">Create your account</h1>
+        </section>
+        <div class="divider div-transparent div-dot mb-2"></div>
+
+        <div th:if="${registrationSuccessMessag}">
+          <div
+            th:text="${registrationSuccessMessage}"
+            class="success text text-center"
+          ></div>
+        </div>
+
+        <section class="authenticationFormContainer row">
+          <form
+            autocomplete="off"
+            id="registerForm"
+            class="needs-validation authenticationFormContainer"
+            method="post"
+            novalidate
+            th:action="@{/register/check}"
+            th:object="${user}"
+          >
+            <div class="form-group authenticationInputContainer">
+              <label for="username" class="authenticationLabel"
+                >USERNAME *</label
+              >
+              <input
+                class="col-12 form-control authenticationInputText p-3"
+                id="username"
+                required
+                name="username"
+                th:value="${username}"
+                type="text"
+              />
+            </div>
+            <div class="form-group authenticationInputContainer">
+              <label for="email" class="authenticationLabel"
+                >EMAIL ADDRESS *</label
+              >
+              <input
+                class="col-12 form-control authenticationInputText p-3"
+                id="userEmail"
+                required
+                name="userEmailAddress"
+                th:value="${userEmailAddress}"
+                type="email"
+              />
+            </div>
+            <div class="form-group authenticationInputContainer">
+              <label for="userPassword" class="authenticationLabel"
+                >PASSWORD *</label
+              >
+              <input
+                class="col-12 form-control authenticationInputText p-3 fw-bold"
+                id="userPassword"
+                required
+                name="password"
+                th:value="${password}"
+                type="password"
+              />
+            </div>
+            <div th:if="${registrationErrorMessage}">
+              <div
+                th:text="${registrationErrorMessage}"
+                class="text-center error text mb-2"
+              ></div>
+            </div>
+            <div class="text-start text col-12 ps-4 pe-2 lh-lg">
+              <p>Passwords must contain the following:</p>
+              <ul>
+                <li>A minimum of 8 characters</li>
+                <li>At least one digit</li>
+                <li>A combination of uppercase and lowercase characters.</li>
+                <li>At least one special character</li>
+              </ul>
+            </div>
+            <div
+              class="form-group col-12 authenticationButtConontainer mt-5 px-2"
+            >
+              <button class="authenticationButton" type="submit">
+                JOIN NOW
+              </button>
+            </div>
+          </form>
+        </section>
+        <section class="authenticationFormContainer row mt-5">
+          <div class="text-center text col-12">Already a member?</div>
+          <a th:href="@{/login}" class="text-center link-text text col-12"
+            >Log in here</a
+          >
+        </section>
+      </div>
+    </div>
+    <script th:src="@{/assets/bootstrap.bundle.min.js}"></script>
+    <!--<script>
+      (() => {
+        "use strict";
+
+        const form = document.getElementById("registerForm");
+        form.addEventListener(
+          "submit",
+          (event) => {
+            if (!form.checkValidity()) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+
+            form.classList.add("was-validated");
+          },
+          false
+        );
+      })();
+    </script> -->
+  </body>
+</html>
